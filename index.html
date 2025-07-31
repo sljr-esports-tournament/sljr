@@ -4,113 +4,104 @@
   <meta charset="UTF-8" />
   <title>SLJR E-SPORTS Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Gaming font -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome for logos -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    * {
+    body {
       margin: 0;
       padding: 0;
+      background: white;
       font-family: 'Orbitron', sans-serif;
-      box-sizing: border-box;
-    }
-    body {
-      background: #ffffff;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
       height: 100vh;
-      padding: 30px 15px;
-      border: 3px solid black;
+      border: 5px solid black;
     }
 
     .logo {
-      margin-top: 10px;
       width: 120px;
-      height: auto;
-    }
-
-    h1 {
-      color: black;
-      font-size: 28px;
-      text-align: center;
       margin-top: 20px;
     }
 
-    .subtitle {
-      color: rgba(0, 0, 0, 0.4);
+    .title {
+      font-size: 22px;
+      font-weight: bold;
+      color: black;
       text-align: center;
-      margin-top: 5px;
-      font-size: 14px;
-      filter: blur(0.3px);
+      margin: 10px 0 5px;
     }
 
-    .login-buttons {
-      width: 100%;
-      max-width: 320px;
+    .subtitle {
+      font-size: 14px;
+      color: #999;
+      filter: blur(0.5px);
+      text-align: center;
+    }
+
+    .login-container {
+      width: 90%;
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      margin-bottom: 20px;
+      align-items: center;
+      margin-bottom: 40px;
     }
 
-    .btn {
+    .login-btn {
+      width: 100%;
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 14px;
+      border: 2px solid black;
+      font-size: 16px;
+      font-weight: bold;
+      background: linear-gradient(45deg, orange, yellow);
+      color: black;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 14px;
-      font-size: 16px;
-      border-radius: 14px;
-      border: 2px solid black;
+      gap: 12px;
       cursor: pointer;
-      font-weight: bold;
-      background: linear-gradient(to right, orange, yellow);
-      color: black;
-      transition: transform 0.2s ease;
+      transition: all 0.2s ease;
     }
 
-    .btn:hover {
-      transform: scale(1.03);
+    .login-btn img {
+      width: 24px;
+      height: 24px;
     }
 
-    .btn i {
-      margin-right: 10px;
-    }
-
-    @media (max-height: 600px) {
-      .logo {
-        width: 80px;
-      }
-
-      h1 {
-        font-size: 22px;
-      }
+    .login-btn:hover {
+      transform: scale(1.05);
     }
   </style>
+
+  <!-- Gaming font -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 </head>
+
 <body>
-  <img src="logo.png" class="logo" alt="Logo" />
+  <!-- Top Logo -->
+  <img src="logo.png" alt="Logo" class="logo" />
 
+  <!-- Welcome Text -->
   <div>
-    <h1>WELCOME TO ESPORTS WORLD</h1>
-    <p class="subtitle">ACHIEVE YOUR DREAM</p>
+    <h2 class="title">WELCOME TO ESPORTS WORLD</h2>
+    <div class="subtitle">ACHIEVE YOUR DREAM</div>
   </div>
 
-  <div class="login-buttons">
-    <div class="btn" onclick="loginWithGoogle()">
-      <i class="fab fa-google"></i> Continue with Google
+  <!-- Login Buttons -->
+  <div class="login-container">
+    <div class="login-btn" onclick="loginWithGoogle()">
+      <img src="google-login.png" alt="Google" /> Continue with Google
     </div>
-    <div class="btn" onclick="loginWithFacebook()">
-      <i class="fab fa-facebook"></i> Continue with Facebook
+    <div class="login-btn" onclick="loginWithFacebook()">
+      <img src="facebook.png" alt="Facebook" /> Continue with Facebook
     </div>
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-auth.js";
-
+  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyBlsSByB703eveI_Zn4Q4by_0ptNOsutNA",
       authDomain: "sljr-esports-3968e.firebaseapp.com",
@@ -121,33 +112,34 @@
       measurementId: "G-P5DBPTMVWG"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const googleProvider = new GoogleAuthProvider();
-    const facebookProvider = new FacebookAuthProvider();
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
 
-    window.loginWithGoogle = () => {
-      signInWithPopup(auth, googleProvider)
-        .then((result) => {
-          const user = result.user;
-          alert("Welcome " + user.displayName);
-          // Redirect or store user data
+    function loginWithGoogle() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then(() => {
+          localStorage.setItem("userLoggedIn", "true");
+          window.location.href = "home.html";
         })
-        .catch((error) => {
-          alert("Google Login Error: " + error.message);
-        });
-    };
+        .catch(err => alert("Login Failed: " + err.message));
+    }
 
-    window.loginWithFacebook = () => {
-      signInWithPopup(auth, facebookProvider)
-        .then((result) => {
-          const user = result.user;
-          alert("Welcome " + user.displayName);
-          // Redirect or store user data
+    function loginWithFacebook() {
+      const provider = new firebase.auth.FacebookAuthProvider();
+      auth.signInWithPopup(provider)
+        .then(() => {
+          localStorage.setItem("userLoggedIn", "true");
+          window.location.href = "home.html";
         })
-        .catch((error) => {
-          alert("Facebook Login Error: " + error.message);
-        });
+        .catch(err => alert("Login Failed: " + err.message));
+    }
+
+    // Auto redirect if already logged in
+    window.onload = () => {
+      if (localStorage.getItem("userLoggedIn") === "true") {
+        window.location.href = "home.html";
+      }
     };
   </script>
 </body>
