@@ -1,160 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SLJR E-SPORTS - Home</title>
+  <meta charset="UTF-8">
+  <title>Home - SLJR Esports</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Font and Style -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: monospace;
-      background-color: black;
-      color: white;
+      font-family: 'Press Start 2P', monospace;
+      background: white;
+      color: black;
     }
-
-    header {
-      background-color: #111;
-      color: orange;
-      padding: 10px;
-      text-align: center;
-      font-size: 24px;
-      border-bottom: 2px solid orange;
-    }
-
-    .navbar {
-      display: flex;
-      justify-content: space-around;
-      background-color: #222;
-      border-top: 2px solid orange;
-      padding: 10px 0;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-    }
-
-    .navbar a {
-      text-align: center;
-      color: white;
-      text-decoration: none;
-      font-size: 14px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .navbar a img {
-      width: 24px;
-      height: 24px;
-      margin-bottom: 5px;
-    }
-
-    .navbar a.active {
-      color: orange;
-      font-weight: bold;
-    }
-
-    .game-container {
+    .container {
       padding: 20px;
+      padding-bottom: 100px;
     }
-
     .game-card {
-      background-color: #1a1a1a;
-      border: 2px solid orange;
-      border-radius: 10px;
-      padding: 15px;
+      border: 2px solid black;
+      border-radius: 12px;
       margin-bottom: 20px;
       text-align: center;
+      padding: 15px;
     }
-
     .game-card img {
       width: 100%;
       max-width: 300px;
-      border-radius: 10px;
+      border: 2px solid black;
+      border-radius: 8px;
     }
-
-    .game-card h2 {
-      margin: 10px 0;
-      color: white;
-    }
-
     .game-card button {
-      background-color: orange;
+      background: linear-gradient(to right, orange, yellow);
+      border: 2px solid black;
       color: black;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
       font-weight: bold;
+      padding: 10px 20px;
+      margin-top: 10px;
+      border-radius: 12px;
+      font-family: 'Press Start 2P', monospace;
       cursor: pointer;
     }
-
-    .game-card button:hover {
-      background-color: white;
-      color: orange;
+    .navbar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: white;
+      border-top: 2px solid black;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
     }
-
-    @media (max-width: 600px) {
-      .game-card img {
-        width: 90%;
-      }
+    .nav-item {
+      text-align: center;
+      flex: 1;
+    }
+    .nav-item img {
+      width: 24px;
+      height: 24px;
+    }
+    .nav-item span {
+      display: block;
+      font-size: 10px;
+    }
+    .active {
+      background: linear-gradient(to right, orange, yellow);
+      border-radius: 8px;
+      padding: 5px;
     }
   </style>
 </head>
-<body>
-  <header>SLJR E-SPORTS TOURNAMENT</header>
+<body onload="checkLogin()">
 
-  <div class="game-container">
-    <!-- Game 1 -->
+  <div class="container">
     <div class="game-card">
-      <img src="freefire.png" alt="free fire" />
-      <h2>Free Fire</h2>
-      <button>Connected</button>
+      <img src="freefire.png" alt="Free Fire">
+      <h3>FREE FIRE</h3>
+      <button>Connect</button>
     </div>
 
-    <!-- Game 2 -->
     <div class="game-card">
-      <img src="game2.jpg" alt="Game 2" />
-      <h2>Call of Duty</h2>
-      <button>Connected</button>
+      <img src="bgmi.png" alt="BGMI">
+      <h3>BGMI</h3>
+      <button>Connect</button>
     </div>
   </div>
 
   <div class="navbar">
-    <a href="home.html" data-page="home">
-      <img src="home.png" alt="Home" />
-      Home
-    </a>
-    <a href="redeem.html" data-page="redeem">
-      <img src="redeem.png" alt="Redeem" />
-      Redeem
-    </a>
-    <a href="deposit.html" data-page="deposit">
-      <img src="deposit.png" alt="Deposit" />
-      Deposit
-    </a>
-    <a href="dashboard.html" data-page="dashboard">
-      <img src="dashboard.png" alt="Dashboard" />
-      Dashboard
-    </a>
+    <div class="nav-item active">
+      <img src="home.png" alt="Home">
+      <span>Home</span>
+    </div>
+    <div class="nav-item">
+      <a href="redeem.html">
+        <img src="redeem.png" alt="Redeem">
+        <span>Redeem</span>
+      </a>
+    </div>
+    <div class="nav-item">
+      <a href="deposit.html">
+        <img src="deposit.png" alt="Deposit">
+        <span>Deposit</span>
+      </a>
+    </div>
+    <div class="nav-item">
+      <a href="dashboard.html">
+        <img src="dashboard.png" alt="Dashboard">
+        <span>Dashboard</span>
+      </a>
+    </div>
   </div>
 
-  <script>
-    // LOGIN CHECK
-    window.onload = function () {
-      const user = localStorage.getItem("loginUser");
-      if (!user) {
-        window.location.href = "index.html";
-      }
+  <!-- Firebase Auth Check -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-      // SET ACTIVE NAV ITEM
-      const path = window.location.pathname.split("/").pop().split(".")[0]; // 'home', 'redeem', etc.
-      const links = document.querySelectorAll(".navbar a");
+    const firebaseConfig = {
+      apiKey: "AIzaSyBlsSByB703eveI_Zn4Q4by_0ptNOsutNA",
+      authDomain: "sljr-esports-3968e.firebaseapp.com",
+      projectId: "sljr-esports-3968e",
+      storageBucket: "sljr-esports-3968e.appspot.com",
+      messagingSenderId: "361439308376",
+      appId: "1:361439308376:web:f52287ba20a5161559382d",
+      measurementId: "G-P5DBPTMVWG"
+    };
 
-      links.forEach(link => {
-        if (link.getAttribute("data-page") === path) {
-          link.classList.add("active");
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    function checkLogin() {
+      onAuthStateChanged(auth, (user) => {
+        if (!user) {
+          window.location.href = "index.html";
         }
       });
-    };
+    }
   </script>
 </body>
 </html>
