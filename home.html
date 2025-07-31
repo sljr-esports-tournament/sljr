@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SLJR E-SPORTS</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      font-family: 'Press Start 2P', cursive;
+      color: black;
+    }
+
+    .header {
+      text-align: center;
+      font-size: 14px;
+      color: orange;
+      padding: 10px;
+      border-bottom: 2px solid orange;
+    }
+
+    .game-list {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      padding: 20px;
+      flex-wrap: wrap;
+    }
+
+    .game-card {
+      width: 150px;
+      border: 2px solid black;
+      border-radius: 10px;
+      overflow: hidden;
+      text-align: center;
+      background: white;
+    }
+
+    .game-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .game-card p {
+      margin: 10px;
+      font-size: 10px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background-color: white;
+      border-top: 2px solid black;
+      padding: 8px 0;
+    }
+
+    .nav-item {
+      text-align: center;
+      font-size: 8px;
+      color: black;
+    }
+
+    .nav-item img {
+      width: 25px;
+      height: 25px;
+      display: block;
+      margin: 0 auto 3px;
+    }
+
+    .active {
+      color: orange;
+    }
+  </style>
+
+
+</head>
+
+<body>
+
+  <div class="header">SLJR E-SPORTS</div>
+
+  <div class="game-list">
+    <div class="game-card">
+      <img src="ff.jpg" alt="Free Fire Max" />
+      <p>Free Fire Max</p>
+    </div>
+
+    <div class="game-card">
+      <img src="bgmi.jpg" alt="BGMI Coming Soon" />
+      <p>BGMI - Coming Soon</p>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-item active">
+      <img src="home.png" alt="Home" />
+      Home
+    </div>
+    <a href="wallet.html" class="nav-item">
+      <img src="wallet.png" alt="Wallet" />
+      Wallet
+    </a>
+    <a href="dashboard.html" class="nav-item">
+      <img src="user.png" alt="Dashboard" />
+      Dashboard
+    </a>
+    <a href="reward.html" class="nav-item">
+      <img src="reward.png" alt="Reward" />
+      Reward
+    </a>
+  </div>
+
+</body>
+</html>
