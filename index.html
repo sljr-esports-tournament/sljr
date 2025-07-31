@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SLJR E-SPORTS Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Gaming font -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for logos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: 'Orbitron', sans-serif;
+      box-sizing: border-box;
+    }
+    body {
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      height: 100vh;
+      padding: 30px 15px;
+      border: 3px solid black;
+    }
+
+    .logo {
+      margin-top: 10px;
+      width: 120px;
+      height: auto;
+    }
+
+    h1 {
+      color: black;
+      font-size: 28px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .subtitle {
+      color: rgba(0, 0, 0, 0.4);
+      text-align: center;
+      margin-top: 5px;
+      font-size: 14px;
+      filter: blur(0.3px);
+    }
+
+    .login-buttons {
+      width: 100%;
+      max-width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 14px;
+      border: 2px solid black;
+      cursor: pointer;
+      font-weight: bold;
+      background: linear-gradient(to right, orange, yellow);
+      color: black;
+      transition: transform 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.03);
+    }
+
+    .btn i {
+      margin-right: 10px;
+    }
+
+    @media (max-height: 600px) {
+      .logo {
+        width: 80px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <img src="logo.png" class="logo" alt="Logo" />
+
+  <div>
+    <h1>WELCOME TO ESPORTS WORLD</h1>
+    <p class="subtitle">ACHIEVE YOUR DREAM</p>
+  </div>
+
+  <div class="login-buttons">
+    <div class="btn" onclick="loginWithGoogle()">
+      <i class="fab fa-google"></i> Continue with Google
+    </div>
+    <div class="btn" onclick="loginWithFacebook()">
+      <i class="fab fa-facebook"></i> Continue with Facebook
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBlsSByB703eveI_Zn4Q4by_0ptNOsutNA",
+      authDomain: "sljr-esports-3968e.firebaseapp.com",
+      projectId: "sljr-esports-3968e",
+      storageBucket: "sljr-esports-3968e.appspot.com",
+      messagingSenderId: "361439308376",
+      appId: "1:361439308376:web:f52287ba20a5161559382d",
+      measurementId: "G-P5DBPTMVWG"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const googleProvider = new GoogleAuthProvider();
+    const facebookProvider = new FacebookAuthProvider();
+
+    window.loginWithGoogle = () => {
+      signInWithPopup(auth, googleProvider)
+        .then((result) => {
+          const user = result.user;
+          alert("Welcome " + user.displayName);
+          // Redirect or store user data
+        })
+        .catch((error) => {
+          alert("Google Login Error: " + error.message);
+        });
+    };
+
+    window.loginWithFacebook = () => {
+      signInWithPopup(auth, facebookProvider)
+        .then((result) => {
+          const user = result.user;
+          alert("Welcome " + user.displayName);
+          // Redirect or store user data
+        })
+        .catch((error) => {
+          alert("Facebook Login Error: " + error.message);
+        });
+    };
+  </script>
+</body>
+</html>
