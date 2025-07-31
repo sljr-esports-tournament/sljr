@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Delete Account - SLJR E-SPORTS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #ffffff;
+      color: #000000;
+      font-family: 'Orbitron', sans-serif;
+      padding: 40px;
+      max-width: 600px;
+      margin: auto;
+      box-sizing: border-box;
+    }
+
+    h2 {
+      color: #000000;
+      border-left: 4px solid #000000;
+      padding-left: 10px;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      font-family: 'Orbitron', sans-serif;
+      border: 1.5px solid #000000;
+      background-color: #ffffff;
+      color: #000000;
+      box-sizing: border-box;
+    }
+
+    .checkbox {
+      display: flex;
+      align-items: center;
+      margin-top: 15px;
+    }
+
+    .checkbox input {
+      margin-right: 10px;
+    }
+
+    button {
+      margin-top: 25px;
+      padding: 12px 20px;
+      width: 100%;
+      font-size: 16px;
+      font-weight: bold;
+      border: 1.5px solid #000000;
+      background: linear-gradient(45deg, #ffa500, #ffcc00);
+      color: #000000;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+      border: 1.5px solid #999;
+    }
+
+    p {
+      font-size: 14px;
+      margin-top: 0;
+    }
+
+    .boxed {
+      border: 1.5px solid #000000;
+      padding: 20px;
+      background-color: #ffffff;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Account Deletion Request</h2>
+  <p>If you want to delete your SLJR E-SPORTS account, please fill in the form below. When you click "Delete My Data", it will open your email app with a pre-filled request.</p>
+
+  <div class="boxed">
+    <label for="email">Your Email Address</label>
+    <input type="email" id="email" placeholder="you@example.com" required>
+
+    <label for="platform">Select Login Platform</label>
+    <select id="platform">
+      <option value="Facebook">Facebook</option>
+      <option value="Google">Google</option>
+    </select>
+
+    <div class="checkbox">
+      <input type="checkbox" id="confirmDelete">
+      <label for="confirmDelete">I want to delete my account</label>
+    </div>
+
+    <button id="deleteBtn" disabled>Delete My Data</button>
+  </div>
+
+  <script>
+    const emailInput = document.getElementById("email");
+    const platformSelect = document.getElementById("platform");
+    const confirmCheckbox = document.getElementById("confirmDelete");
+    const deleteBtn = document.getElementById("deleteBtn");
+
+    confirmCheckbox.addEventListener("change", () => {
+      deleteBtn.disabled = !confirmCheckbox.checked;
+    });
+
+    deleteBtn.addEventListener("click", () => {
+      const userEmail = emailInput.value.trim();
+      const platform = platformSelect.value;
+
+      if (!userEmail) {
+        alert("Please enter your email.");
+        return;
+      }
+
+      const subject = `Data Deletion Request - ${platform}`;
+      const body = `Hello SLJR E-SPORTS Team,%0D%0A%0D%0AI request deletion of my account and all associated data.%0D%0A%0D%0AEmail: ${userEmail}%0D%0APlatform: ${platform}%0D%0A%0D%0AThank you.`;
+      const mailto = `mailto:sljr.esports@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+      window.location.href = mailto;
+    });
+  </script>
+
+</body>
+</html>
