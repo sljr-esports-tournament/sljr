@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Free Fire Tournament</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      background-color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 20px;
+      color: black;
+    }
+    h1 {
+      text-align: center;
+      color: orange;
+      border-bottom: 2px solid black;
+      padding-bottom: 10px;
+      margin-bottom: 30px;
+    }
+    .tournament {
+      border: 2px solid black;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .tournament img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+    .details p {
+      margin: 5px 0;
+      font-size: 16px;
+    }
+    .join-btn {
+      margin-top: 15px;
+      background: linear-gradient(to right, orange, yellow);
+      border: none;
+      color: black;
+      font-weight: bold;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+    }
+    .join-btn:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Free Fire Tournaments</h1>
+
+  <div id="tournament-list"></div>
+
+  <!-- Firebase App (the core Firebase SDK) -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+  <script>
+    // Your Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBlsSByB703eveI_Zn4Q4by_0ptNOsutNA",
+      authDomain: "sljr-esports-3968e.firebaseapp.com",
+      projectId: "sljr-esports-3968e",
+      databaseURL: "https://sljr-esports-3968e-default-rtdb.firebaseio.com",
+      storageBucket: "sljr-esports-3968e.appspot.com",
+      messagingSenderId: "361439308376",
+      appId: "1:361439308376:web:f52287ba20a5161559382d"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    function loadTournaments() {
+      const container = document.getElementById('tournament-list');
+      db.ref('tournaments/freefire').once('value', (snapshot) => {
+        container.innerHTML = '';
+        snapshot.forEach(child => {
+          const data = child.val();
+          const div = document.createElement('div');
+          div.className = 'tournament';
+          div.innerHTML = `
+            <img src="${data.image}" alt="Game Logo" />
+            <div class="details">
+              <p><strong>Match ID:</strong> ${data.matchId}</p>
+              <p><strong>Entry Fee:</strong> ₹${data.entryFee}</p>
+              <p><strong>Prize Pool:</strong> ₹${data.prizePool}</p>
+              <button class="join-btn">Join Tournament</button>
+            </div>
+          `;
+          container.appendChild(div);
+        });
+      });
+    }
+
+    window.onload = loadTournaments;
+  </script>
+
+</body>
+</html>
